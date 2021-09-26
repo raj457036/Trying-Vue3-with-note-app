@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="./todo_app/style.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <nav class="navbar is-primary">
+            <div class="navbar-brand">
+                <span class="navbar-item">PODO</span>
+            </div>
+        </nav>
+
+        <div class="columns expand-height">
+            <div class="column is-3 border-right m-2 mb-0 pl-5 pt-5">
+                <menu-box v-model="currentIndex" :scope="editScope" :current-scope="currentScope"
+                    @scope-changed="onScopeChanged($event)" label="Edits" :items="editOptions" class="mb-2">
+                </menu-box>
+                <menu-box v-model="currentIndex" :scope="noteScope" :current-scope="currentScope"
+                    @scope-changed="onScopeChanged($event)" label="Notes" :items="noteTitles"></menu-box>
+            </div>
+            <div class="column m-2 pl-5 pt-5">
+                <template v-if="isEditScope && currentIndex === 0">
+                    <note-form @on-submit="onDataSubmit($event)" @on-delete="onDataDelete($event)"></note-form>
+                </template>
+                <template v-else-if="isNoteScope">
+                    <note-form :note="selectedNote" @on-submit="onDataSubmit($event)" @on-delete="onDataDelete($event)">
+                    </note-form>
+                </template>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="./todo_app/app.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trying Vue Js</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <div id="app">
+        <p>{{ content }}</p>
+        <input type="text" name="content" v-model="content" @keyup.enter="addToTodo" v-if="!todoInputHidden">
+        <button @click.right.prevent="showAlert($event)">Right Click Here</button>
+        <hr>
+        <span v-bind:title="content">
+            Hover your mouse over me for a few seconds to see my dynamically bound
+            title!
+        </span>
+        <hr>
+        <h4>Todo App</h4>
+        <ol>
+            <li v-for="(todo, index) in todos">
+                <div>
+                    {{todo}} <button @click='deleteItem(index)'>Delete</button>
+                </div>
+            </li>
+        </ol>
+
+        <h4>Todo Item Component Based TODO</h4>
+        <ol>
+            <todo-item v-for="(todo, index) in todos" :todo="todo" :index="index" @delete="deleteItem($event)">
+            </todo-item>
+        </ol>
+
+        <hr>
+    </div>
+
+    <script>
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    content: "",
+                    todoInputHidden: false,
+                    todos: [],
+                }
+            },
+            watch: {
+                content(newContent, oldContent) {
+                    if (newContent.indexOf('..') != -1) {
+
+                        this.content = newContent.replace("..", ".");
+                        this.addToTodo();
+                    }
+                }
+            },
+            created() {
+                console.log("App Created")
+            },
+            mounted() {
+                console.log("App Mounted");
+
+                // setTimeout(() => {
+                //     this.todoInputHidden = true;
+                // }, 2000);
+            },
+            updated() {
+                console.log("App Updated");
+
+            },
+            methods: {
+                showAlert(event) {
+                    alert(event.button);
+                },
+                addToTodo() {
+                    if (this.content.length == 0) return;
+                    this.todos.push(this.content);
+                    this.content = "";
+                },
+                deleteItem(index) {
+                    this.todos.splice(index, 1);
+                }
+            },
+        });
+
+        app.component("todo-item", {
+            template: `<li>{{ todo }}  <button @click='$emit("delete", index)'>Delete</button></li>`,
+            props: {
+                todo: {
+                    type: String,
+                    required: true,
+                    validator: value => {
+                        return value.length > 0;
+                    }
+                },
+                index: {
+                    type: Number,
+                    required: true,
+                }
+            },
+            emits: ['delete'],
+            updated() {
+                console.log("TODO ITEM UPDATED");
+            },
+            mounted() {
+                console.log("TODO ITEM Mounted");
+            },
+            created() {
+                console.log("TODO ITEM Created");
+            },
+        });
+
+        app.mount("#app");
+    </script>
+</body>
+
+</html>
