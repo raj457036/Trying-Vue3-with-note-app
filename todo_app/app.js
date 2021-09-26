@@ -18,7 +18,7 @@ const AppComponent = {
             ],
             editOptions: [
                 "+ New Note",
-                "Tags",
+                // "Tags",
             ],
             editScope: "edit",
             noteScope: "notes",
