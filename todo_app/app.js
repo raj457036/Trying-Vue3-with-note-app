@@ -7,14 +7,7 @@ const AppComponent = {
     data() {
         return {
             items: [
-                new Note(1, "Title 1", "Content 1"),
-                new Note(2, "Title 2", "Content 2"),
-                new Note(3, "Title 3", "Content 3"),
-                new Note(4, "Title 4", "Content 4"),
-                new Note(5, "Title 5", "Content 5"),
-                new Note(6, "Title 6", "Content 6"),
-                new Note(7, "Title 7", "Content 7"),
-                new Note(8, "Title 8", "Content 8"),
+                new Note(1, "Sample Title", "Sample content"),
             ],
             editOptions: [
                 "+ New Note",

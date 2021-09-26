@@ -1,6 +1,7 @@
 import {
     Note
 } from "../../models/note.js";
+import customInputField from "./custom-input-field.js";
 
 const name = 'note-form';
 const NoteForm = {
@@ -61,19 +62,23 @@ const NoteForm = {
         }
     },
     emit: ['onSubmit', 'onDelete'],
+    components: [customInputField.name],
     template: `
     <form>
-        <div class="field">
-            <label for="title-field" class="label">Title</label>
-            <div class="control">
-                <input v-model="title" id="title-field" type="text" class="input" placeholder="Enter title here">
-            </div>
-        </div>
-        <div class="field">
-            <label for="content-field" class="label">Content</label>
-            <textarea v-model="content" id="content-field" cols="30" rows="10" class="textarea"
-                placeholder="Something amazing..."></textarea>
-        </div>
+        <custom-input-field 
+            label="Title" 
+            v-model="title" 
+            type="text" 
+            placeholder="Enter title here"
+        ></custom-input-field>
+
+        <custom-input-field 
+            label="Content"
+            v-model="content" 
+            type="textarea" 
+            placeholder="Enter title here"
+        ></custom-input-field>
+       
         <div class="buttons">
             <button class="button is-primary" @click.prevent="saveNote()">Save</button>
             

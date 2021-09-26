@@ -1,10 +1,7 @@
+import menuListComponent from "./menu-list-component.js";
+
 const name = "menu-box";
 const MenuComponent = {
-    data() {
-        return {
-            selectedIndex: -1,
-        }
-    },
     props: {
         label: {
             type: String,
@@ -22,25 +19,25 @@ const MenuComponent = {
             type: String,
             required: true,
         },
-
+        modelValue: {}
     },
     methods: {
         onChanged(index) {
             this.selectedIndex = index;
-            this.$emit("update:modelValue", index);
             this.$emit("scopeChanged", {
                 scope: this.scope,
             });
         }
     },
     emits: ['scopeChanged', 'update:modelValue'],
+    components: [menuListComponent.name],
     computed: {
-        modelValue: {
+        selectedIndex: {
             get() {
-                return this.selectedIndex;
+                return this.modelValue;
             },
             set(value) {
-                this.selectedIndex = value;
+                this.$emit("update:modelValue", value);
             }
         },
         currentSelectedIndex() {
